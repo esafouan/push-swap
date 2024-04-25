@@ -6,11 +6,11 @@
 /*   By: esafouan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 18:05:34 by esafouan          #+#    #+#             */
-/*   Updated: 2023/01/16 17:53:54 by esafouan         ###   ########.fr       */
+/*   Updated: 2023/01/16 16:29:01 by esafouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "push_swap_bonus.h"
 
 void	pb(t_list **a, t_list **b)
 {
@@ -19,7 +19,6 @@ void	pb(t_list **a, t_list **b)
 		ft_lstadd_front(b, ft_lstnew((*a)->content));
 		free(*a);
 		*a = (*a)->next;
-		write(1, "pb\n", 3);
 	}
 }
 
@@ -30,7 +29,6 @@ void	pa(t_list **a, t_list **b)
 		ft_lstadd_front(a, ft_lstnew((*b)->content));
 		free(*b);
 		(*b) = (*b)->next;
-		write(1, "pa\n", 3);
 	}
 }
 
@@ -52,7 +50,6 @@ void	rra(t_list **a)
 		tmp1->next = NULL;
 		tmp->next = *a;
 		*a = tmp;
-		write(1, "rra\n", 4);
 	}
 }
 
@@ -74,12 +71,16 @@ void	rrb(t_list **b)
 		tmp1->next = NULL;
 		tmp->next = *b;
 		*b = tmp;
-		write(1, "rrb\n", 4);
 	}
 }
 
-void	help(t_list *a, t_list *b, t_ps index)
+void	check_space(char *str)
 {
-	a_to_b(index.tabsorted, &index, &a, &b);
-	b_to_a(&index, &a, &b);
+	int	i;
+
+	i = 0;
+	while (str[i] && str[i] == 32)
+		i++;
+	if (i == ft_strlen(str))
+		printerror("Error\n");
 }

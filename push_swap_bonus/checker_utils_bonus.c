@@ -78,7 +78,7 @@ void	do_instructions(char *gnl, t_list **a, t_list **b)
 	else if (ft_strcmp(gnl, "rra\n") == 0)
 		rra(a);
 	else if (ft_strcmp(gnl, "rb\n") == 0)
-		rb(a);
+		rb(b);
 	else if (ft_strcmp(gnl, "rrb\n") == 0)
 		rrb(b);
 	else if (ft_strcmp(gnl, "pa\n") == 0)

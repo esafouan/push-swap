@@ -1,34 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   instructio_bonus.c                                 :+:      :+:    :+:   */
+/*   args.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: esafouan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/16 16:29:38 by esafouan          #+#    #+#             */
-/*   Updated: 2023/01/16 17:58:26 by esafouan         ###   ########.fr       */
+/*   Created: 2023/01/14 21:37:12 by esafouan          #+#    #+#             */
+/*   Updated: 2023/01/18 21:00:37 by esafouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap_bonus.h"
-
-void	ss(t_list **a, t_list **b)
-{
-	sa(a);
-	sb(b);
-}
-
-void	rr(t_list **a, t_list **b)
-{
-	ra(a);
-	rb(b);
-}
-
-void	rrr(t_list **a, t_list **b)
-{
-	rra(a);
-	rrb(b);
-}
+#include "push_swap.h"
 
 int	*sorting_array(int *array, int size)
 {
@@ -56,6 +38,45 @@ int	*sorting_array(int *array, int size)
 	return (array);
 }
 
+int	check_sort(t_list **a)
+{	
+	while ((*a)->next)
+	{
+		if ((*a)->content > (*a)->next->content)
+			return (0);
+		(*a) = (*a)->next;
+	}
+	return (1);
+}
+
+int	*param(int a, char **v, t_ps *w)
+{
+	t_help	go;
+
+	go.i = 1;
+	go.j = 0;
+	go.t = 0;
+	go.arr = malloc (sizeof(int) * w->count);
+	while (go.i < a)
+	{
+		go.j = 0;
+		if (v[go.i][0] == '\0')
+			printerror("Error\n");
+		check_space(v[go.i]);
+		go.split = ft_split(v[go.i], ' ');
+		while (go.split[go.j] != 0)
+		{
+			go.arr[go.t] = ft_atoi(go.split[go.j]);
+			free(go.split[go.j]);
+			go.j++;
+			go.t++;
+		}
+		free(go.split);
+		go.i++;
+	}	
+	return (go.arr);
+}
+
 int	countlen(char const *s1, char c)
 {
 	int	i;
@@ -75,4 +96,17 @@ int	countlen(char const *s1, char c)
 		s1++;
 	}
 	return (i);
+}
+
+void	paramsum(int ac, char **av, t_ps *p)
+{
+	int	i;
+
+	p->count = 0;
+	i = 1;
+	while (i < ac)
+	{
+		p->count += countlen(av[i], ' ');
+		i++;
+	}
 }

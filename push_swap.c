@@ -1,24 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   checker_bonus.c                                    :+:      :+:    :+:   */
+/*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: esafouan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/16 16:38:24 by esafouan          #+#    #+#             */
-/*   Updated: 2023/01/16 17:29:08 by esafouan         ###   ########.fr       */
+/*   Created: 2023/01/14 21:07:04 by esafouan          #+#    #+#             */
+/*   Updated: 2023/01/18 21:02:51 by esafouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap_bonus.h"
+#include "push_swap.h"
 
-void	prerror(char *str)
+void	printerror(char *str)
 {
 	printf("%s", str);
 	exit(0);
 }
 
-int	ft_atoii(char *str)
+int	ft_atoi(char *str)
 {
 	t_atoii	q;
 
@@ -34,60 +34,66 @@ int	ft_atoii(char *str)
 		q.i++;
 	}
 	if (str[q.i] == '\0')
-		prerror("Error\n");
+		printerror("Error\n");
 	while (str && str[q.i])
 	{
 		if (!(str[q.i] <= '9' && str[q.i] >= '0'))
-			prerror("Error\n");
+			printerror("Error\n");
 		q.j = q.j * 10 + str[q.i] - 48;
 		q.i++;
 	}
 	if (q.j * q.sign > 2147483647 || q.j * q.sign < -2147483648)
-		prerror("Error\n");
+		printerror("Error\n");
 	return (q.j * q.sign);
 }
 
-void	read_instruction(int fd, t_list **a, t_list **b)
+void	check_dup(int c, int *array)
 {
-	char	*gnl;
+	int	i;
 
-	gnl = get_next_line(fd);
-	while (gnl != NULL)
+	i = 0;
+	while (i < c)
 	{
-		do_instructions(gnl, a, b);
-		gnl = get_next_line(fd);
+		if (array[i] == array[i + 1])
+			printerror("Error\n");
+		i++;
 	}
 }
 
-int	check_sort(t_list **a)
+void	creat_stack(t_list **a, t_ps *index)
 {
-	while ((*a)->next)
+	int	i;
+
+	i = 1;
+	*a = ft_lstnew(index->tab[0]);
+	while (i < index->count)
 	{
-		if ((*a)->content > (*a)->next->content)
-			return (0);
-		(*a) = (*a)->next;
+		ft_lstadd_back(a, ft_lstnew(index->tab[i]));
+		i++;
 	}
-	return (1);
 }
 
 int	main(int ac, char **av)
 {
-	t_list		*a;
-	t_list		*b;
-	t_checker	index;
+	t_list	*a;
+	t_list	*b;
+	t_ps	index;
 
 	b = NULL;
-	if (ac == 1)
-		exit(0);
-	numofparam(ac, av, &index);
-	index.tab = transfer_para(ac, av, &index);
-	index.tabsorted = transfer_para(ac, av, &index);
-	index.tabsorted = sorting_array(index.tabsorted, index.count);
-	check_duplicate(index.count, index.tabsorted);
-	make_stack(&a, &index);
-	read_instruction(0, &a, &b);
-	if (check_sort(&a) == 0)
-		printf("KO\n");
-	else if (check_sort(&a) == 1)
-		printf("OK\n");
+	if (ac > 1)
+	{
+		paramsum(ac, av, &index);
+		index.tab = param(ac, av, &index);
+		index.tabsorted = param(ac, av, &index);
+		index.tabsorted = sorting_array(index.tabsorted, index.count);
+		check_dup(index.count, index.tabsorted);
+		creat_stack(&a, &index);
+		elements(&index, &a);
+		if (index.count == 3)
+			a = sorthree(&a, &index);
+		else if (index.count <= 5)
+			sortfive(&a, &b, &index);
+		else if (index.count > 5)
+			help(&a, &b, index);
+	}
 }

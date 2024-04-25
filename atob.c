@@ -6,14 +6,19 @@
 /*   By: esafouan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 17:50:15 by esafouan          #+#    #+#             */
-/*   Updated: 2023/01/14 17:58:23 by esafouan         ###   ########.fr       */
+/*   Updated: 2023/01/18 21:17:06 by esafouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	elements(t_ps *p)
+void	elements(t_ps *p, t_list **a)
 {
+	t_list	*mp;
+
+	mp = *a;
+	if (check_sort(&mp) == 1)
+		exit(0);
 	p->midle = (p->count / 2) - 1;
 	if (p->count <= 10)
 		p->offset = p->count / 5;

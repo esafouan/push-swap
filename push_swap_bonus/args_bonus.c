@@ -6,11 +6,11 @@
 /*   By: esafouan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 21:37:12 by esafouan          #+#    #+#             */
-/*   Updated: 2023/01/16 16:19:06 by esafouan         ###   ########.fr       */
+/*   Updated: 2023/01/16 17:55:59 by esafouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "push_swap_bonus.h"
 
 int	*sorting_array(int *array, int size)
 {
@@ -38,15 +38,14 @@ int	*sorting_array(int *array, int size)
 	return (array);
 }
 
-int	check_sort(t_list **a)
+int	ft_strlen(char *str)
 {
-	while ((*a)->next)
-	{
-		if ((*a)->content > (*a)->next->content)
-			return (0);
-		(*a) = (*a)->next;
-	}
-	return (1);
+	int	i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
 }
 
 int	*param(int a, char **v, t_ps *w)
@@ -66,7 +65,7 @@ int	*param(int a, char **v, t_ps *w)
 		go.split = ft_split(v[go.i], ' ');
 		while (go.split[go.j] != 0)
 		{
-			go.arr[go.t] = ft_atoi(go.split[go.j]);
+			go.arr[go.t] = ft_atoii(go.split[go.j]);
 			free(go.split[go.j]);
 			go.j++;
 			go.t++;
